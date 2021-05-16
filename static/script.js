@@ -9,7 +9,10 @@ const messageBox = document.getElementById("messageBox")
 
 
 //Inicjowanie zmiennych z danymi o użytkowniku.
-let userName = prompt("Podaj nazwę")
+let userName = prompt("Podaj swój nick")
+if(userName=="" || userName==undefined || userName==null){
+    userName = "użytkownik"+Math.floor(Math.random()*1000)
+}
 // let userName = "Bob"
 let commandType = false
 let userColor = "#" + String(Math.floor(Math.random()*16777215).toString(16));
@@ -30,7 +33,25 @@ var poll = function () {
             messageNick.innerText = `[${data.nick}]`
     
             let messageText = document.createElement("span")
-            messageText.innerText =": "+ data.message
+            let messageTextArray = data.message.split("/")
+            // console.log(messageTextArray)
+            if(messageTextArray[0] === "https:"){
+                if(messageTextArray[2] === "www.youtube.com"){
+                    console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+                    messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3].slice(8)}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
+                }
+                else if(messageTextArray[2] === "youtu.be"){
+                    console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+                    messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3]}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
+                }
+                else{
+                    messageText.innerText =": "+ data.message
+                }
+            }
+            else{
+                messageText.innerText =": "+ data.message
+            }
+            
     
             newMessage.appendChild(messageNick)
             newMessage.appendChild(messageText)
@@ -159,7 +180,7 @@ function textFunctionsHandler(textFunction){
             break;
 
         case "grappa":
-            newMessage.innerHTML='<iframe id="grappa" src="https://www.youtube.com/embed/JfssYhqj7gw?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
+            newMessage.innerHTML='<iframe class="youtubeLink" src="https://www.youtube.com/embed/JfssYhqj7gw?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
             console.log(newMessage.firstChild)
             break
 
