@@ -9,8 +9,6 @@ const messageBox = document.getElementById("messageBox")
 let $scrollbar = $("#scrollbar1")
 $scrollbar.tinyscrollbar()
 let $scrollbarData = $scrollbar.data("plugin_tinyscrollbar");
-// var scrollbar5 = $scrollbar5.data("plugin_tinyscrollbar")
-// scrollbar5.update();
 
 
 //Inicjowanie zmiennych z danymi o użytkowniku.
@@ -121,14 +119,19 @@ async function sendMessage(){
         else{
             if(message.toLowerCase() != lastMessage){
                 lastMessage = message.toLowerCase()
-                var http = new XMLHttpRequest();
-                var url = 'http://localhost:3000/grzyb';
+                return new Promise((resolve, reject) => {
+                    const http = new XMLHttpRequest();
+                    var url = 'http://localhost:3000/grzyb';
+                    var params = `nick=${userName}&message=${encodeURIComponent(message)}&color=${userColor}`
+                    http.open('POST', url, true);
+                    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    commandType = false
+                    input.value = ""
+                    http.onload = () => resolve(http.responseText);
+                    http.onerror = () => reject(http.statusText);
+                    http.send(params);
+                  });
                 
-                var params = `nick=${userName}&message=${encodeURIComponent(message)}&color=${userColor}`
-            
-                http.open('POST', url, true);
-                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                http.send(params);
             }
         }
     }
