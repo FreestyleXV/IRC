@@ -6,6 +6,11 @@ import { checkText } from 'https://cdn.skypack.dev/smile2emoji'
 const input = document.getElementById("message")
 const sendButton = document.getElementById("send")
 const messageBox = document.getElementById("messageBox")
+let $scrollbar = $("#scrollbar1")
+$scrollbar.tinyscrollbar()
+let $scrollbarData = $scrollbar.data("plugin_tinyscrollbar");
+// var scrollbar5 = $scrollbar5.data("plugin_tinyscrollbar")
+// scrollbar5.update();
 
 
 //Inicjowanie zmiennych z danymi o użytkowniku.
@@ -37,26 +42,31 @@ var poll = function () {
             // console.log(messageTextArray)
             if(messageTextArray[0] === "https:"){
                 if(messageTextArray[2] === "www.youtube.com"){
-                    console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+                    // console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
                     messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3].slice(8)}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
                 }
                 else if(messageTextArray[2] === "youtu.be"){
-                    console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+                    // console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
                     messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3]}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
                 }
                 else{
                     messageText.innerText =": "+ data.message
+                    messageText.classList.add("normalMessage")
                 }
             }
             else{
-                messageText.innerText =": "+ data.message
+                messageText.innerText =":        "+ data.message
+                messageText.classList.add("normalMessage")
             }
             
     
             newMessage.appendChild(messageNick)
             newMessage.appendChild(messageText)
             messageBox.appendChild(newMessage)
-            messageBox.scrollTop = messageBox.scrollHeight
+            $('.normalMessage').emoticonize()
+            
+            // messageBox.scrollTop = messageBox.scrollHeight
+            $scrollbarData.update("bottom");
         }
         
         poll();
@@ -181,22 +191,22 @@ function textFunctionsHandler(textFunction){
 
         case "grappa":
             newMessage.innerHTML='<iframe class="youtubeLink" src="https://www.youtube.com/embed/JfssYhqj7gw?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
-            console.log(newMessage.firstChild)
+            // console.log(newMessage.firstChild)
             break
 
         case "player":
             newMessage.innerHTML='<iframe id="player" src="http://localhost:8080/" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
-            console.log(newMessage.firstChild)
+            // console.log(newMessage.firstChild)
             break
         
         case "chat":
             newMessage.innerHTML='<iframe id="chat" src="http://localhost:3000/" title="YouTube video player" frameborder="0"></iframe>'
-            console.log(newMessage.firstChild)
+            // console.log(newMessage.firstChild)
             break
 
         case "dareks":
             newMessage.innerHTML='<iframe id="dareks" src="https://spec.pl.hostingasp.pl/Login.aspx?ReturnUrl=%2f" title="YouTube video player" frameborder="0"></iframe>'
-            console.log(newMessage.firstChild)
+            // console.log(newMessage.firstChild)
             break;
         
         default:
@@ -206,7 +216,8 @@ function textFunctionsHandler(textFunction){
     }
     
     messageBox.appendChild(newMessage)
-    messageBox.scrollTop = messageBox.scrollHeight
+    $scrollbarData.update("bottom");
+    // messageBox.scrollTop = messageBox.scrollHeight
 }
 
 
@@ -233,7 +244,8 @@ async function inputChecking(){
     else if(commandType==false){
         input.classList.remove("function")
         input.classList.add("text")
-        input.value = checkText(input.value)
+        // console.log($('#message'))
+        // input.value = checkText(input.value)
     }
 }
 

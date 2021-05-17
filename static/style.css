@@ -30,13 +30,15 @@
     width:50vw;
     height: 70vh;
     /* border: black 2px solid; */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     word-wrap: break-word;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    /* overflow: hidden; */
     background-color:rgb(221, 220, 220);
-    scrollbar-width: thin;
-    scrollbar-color: black yellow;
+    /* scrollbar-width: thin;
+    scrollbar-color: black yellow; */
     font-size: 2vh;
+    /* position: relative; */
 }
 
 #send{

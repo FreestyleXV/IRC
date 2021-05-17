@@ -6,6 +6,8 @@ const PORT = 3000;
 
 var longpoll = require("express-longpoll")(app);
 
+var messages = []
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('static'));
@@ -16,7 +18,7 @@ longpoll.create("/poll");
 app.post("/grzyb", function (req, res) {
     console.log(req.body)
     var data = req.body;
-    longpoll.publish("/poll", data);
+    messages.push(data)
     res.end();
 })
 
@@ -28,3 +30,10 @@ app.get("/", function (req, res) {
 app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT);
 });
+
+setInterval(function(){
+    if(messages.length >= 1){
+        let message = messages.shift()
+        longpoll.publish("/poll", message)
+    }
+}, 100)
