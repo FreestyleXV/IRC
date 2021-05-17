@@ -31,9 +31,11 @@ app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT);
 });
 
-setInterval(function(){
+setInterval(()=>{
     if(messages.length >= 1){
-        let message = messages.shift()
-        longpoll.publish("/poll", message)
+        return new Promise((resolve, reject) => {
+            let message = messages.shift()
+            longpoll.publish("/poll", message)
+        })
     }
 }, 100)

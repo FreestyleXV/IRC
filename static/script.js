@@ -48,7 +48,7 @@ var poll = function () {
                     messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3]}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
                 }
                 else{
-                    messageText.innerText =": "+ data.message
+                    messageText.innerText =":   "+ data.message
                     messageText.classList.add("normalMessage")
                 }
             }
@@ -190,22 +190,18 @@ function textFunctionsHandler(textFunction){
         
         case "cls": case "erase": case "blank": case "clear":
             messageBox.innerText="";
+            $scrollbarData.update("bottom");
             break;
 
         case "grappa":
             newMessage.innerHTML='<iframe class="youtubeLink" src="https://www.youtube.com/embed/JfssYhqj7gw?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
             // console.log(newMessage.firstChild)
-            break
-
-        case "player":
-            newMessage.innerHTML='<iframe id="player" src="http://localhost:8080/" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>'
-            // console.log(newMessage.firstChild)
-            break
+            break;
         
         case "chat":
             newMessage.innerHTML='<iframe id="chat" src="http://localhost:3000/" title="YouTube video player" frameborder="0"></iframe>'
             // console.log(newMessage.firstChild)
-            break
+            break;
 
         case "dareks":
             newMessage.innerHTML='<iframe id="dareks" src="https://spec.pl.hostingasp.pl/Login.aspx?ReturnUrl=%2f" title="YouTube video player" frameborder="0"></iframe>'
@@ -214,7 +210,7 @@ function textFunctionsHandler(textFunction){
         
         default:
             newMessage.innerText=`Funkcja ${textFunction[0]} nie istnieje.`
-            break
+            break;
 
     }
     
