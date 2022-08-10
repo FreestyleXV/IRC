@@ -6,9 +6,7 @@ import { checkText } from 'https://cdn.skypack.dev/smile2emoji'
 const input = document.getElementById("message")
 const sendButton = document.getElementById("send")
 const messageBox = document.getElementById("messageBox")
-let $scrollbar = $("#scrollbar1")
-$scrollbar.tinyscrollbar()
-let $scrollbarData = $scrollbar.data("plugin_tinyscrollbar");
+
 
 
 //Inicjowanie zmiennych z danymi o użytkowniku.
@@ -25,9 +23,7 @@ let lastMessage = ""
 
 //Longpoll
 var poll = function () {
-    $.ajax({
-    url: "http://localhost:3000/poll",
-    success: async function(data){
+    fetch("http://localhost:3000/poll").then(res=>res.json().then(data=>{
         if(!blockedUsers.includes(data.nick)){
             let newMessage = document.createElement("div")
 
@@ -61,19 +57,59 @@ var poll = function () {
             newMessage.appendChild(messageNick)
             newMessage.appendChild(messageText)
             messageBox.appendChild(newMessage)
-            $('.normalMessage').emoticonize()
+            // $('.normalMessage').emoticonize()
             
-            // messageBox.scrollTop = messageBox.scrollHeight
-            $scrollbarData.update("bottom");
         }
         
         poll();
-    },
-    error: function() {
-        poll();
-    },
-    timeout: 30000
-    });
+    })).catch(err=>{poll()}).finally(()=>{poll()})
+    // $.ajax({
+    // url: "http://localhost:3000/poll",
+    // success: async function(data){
+    //     if(!blockedUsers.includes(data.nick)){
+    //         let newMessage = document.createElement("div")
+
+    //         let messageNick = document.createElement("span")
+    //         messageNick.style.color = data.color
+    //         messageNick.innerText = `[${data.nick}]`
+    
+    //         let messageText = document.createElement("span")
+    //         let messageTextArray = data.message.split("/")
+    //         // console.log(messageTextArray)
+    //         if(messageTextArray[0] === "https:"){
+    //             if(messageTextArray[2] === "www.youtube.com"){
+    //                 // console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+    //                 messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3].slice(8)}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
+    //             }
+    //             else if(messageTextArray[2] === "youtu.be"){
+    //                 // console.log(messageTextArray[0], messageTextArray[1], messageTextArray[2], messageTextArray[3].slice(8))
+    //                 messageText.innerHTML = `<iframe class="youtubeLink" src="${messageTextArray[0]}//${messageTextArray[1]}/www.youtube.com/embed/${messageTextArray[3]}?autoplay=1" title="YouTube video player" frameborder="0" allow="autoplay"></iframe>`
+    //             }
+    //             else{
+    //                 messageText.innerText =":   "+ data.message
+    //                 messageText.classList.add("normalMessage")
+    //             }
+    //         }
+    //         else{
+    //             messageText.innerText =":        "+ data.message
+    //             messageText.classList.add("normalMessage")
+    //         }
+            
+    
+    //         newMessage.appendChild(messageNick)
+    //         newMessage.appendChild(messageText)
+    //         messageBox.appendChild(newMessage)
+    //         $('.normalMessage').emoticonize()
+            
+    //     }
+        
+    //     poll();
+    // },
+    // error: function() {
+    //     poll();
+    // },
+    // timeout: 30000
+    // });
 };
 poll();
 
@@ -198,16 +234,6 @@ function textFunctionsHandler(textFunction){
             // console.log(newMessage.firstChild)
             break;
         
-        case "chat":
-            newMessage.innerHTML='<iframe id="chat" src="http://localhost:3000/" title="YouTube video player" frameborder="0"></iframe>'
-            // console.log(newMessage.firstChild)
-            break;
-
-        case "dareks":
-            newMessage.innerHTML='<iframe id="dareks" src="https://spec.pl.hostingasp.pl/Login.aspx?ReturnUrl=%2f" title="YouTube video player" frameborder="0"></iframe>'
-            // console.log(newMessage.firstChild)
-            break;
-        
         default:
             newMessage.innerText=`Funkcja ${textFunction[0]} nie istnieje.`
             break;
@@ -215,8 +241,6 @@ function textFunctionsHandler(textFunction){
     }
     
     messageBox.appendChild(newMessage)
-    $scrollbarData.update("bottom");
-    // messageBox.scrollTop = messageBox.scrollHeight
 }
 
 

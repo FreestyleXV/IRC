@@ -140,7 +140,7 @@ input.addEventListener("input", inputChecking)
 input.addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      sendMessage()
+      sendButton.click()
     }
 });
 

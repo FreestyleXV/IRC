@@ -2,6 +2,10 @@
     font-family:Arial, sans-serif;
 }
 
+body{
+    margin: 0;
+}
+
 
 #messageBox::-webkit-scrollbar {
     background-color:rgb(221, 220, 220);
@@ -27,7 +31,7 @@
 
 #messageBox{
     font-family:Arial, sans-serif;
-    width:50vw;
+    width:100vw;
     height: 70vh;
     /* border: black 2px solid; */
     /* box-sizing: border-box; */
@@ -69,7 +73,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 38vw;
+    width: 76vw;
     height: 5vh;
     background-color: grey;
     border: none;
@@ -81,7 +85,7 @@
 
 #inputFrame{
     position: absolute;
-    width: 50vw;
+    width: 100vw;
     height: 5vh;
     background-color: grey;
 }
